@@ -10,12 +10,44 @@
         const QUERY_TYPE_INSERT = 3;
         const QUERY_TYPE_DELETE = 4;
 
-        private $databaseState = self::DATABASE_NOT_CONNECTED;
-        private $pdo_connector;
+        private $_databaseState = self::DATABASE_NOT_CONNECTED;
+        private $_pdo_connector;
+        private $_driver;
+        private $_host;
+        private $_name;
+        private $_charset;
+        
 
         private static $instance;
 
-        private function __construct(){}
+        public function __construct(string $driver, string $host, string $name, string $charset){
+            if($driver == ""){
+                throw new Exception("No driver detected. Please, put a valid driver in order to be able to connect yourself to your database.");
+            } else {
+                $this->_driver = $driver;
+            }
+            if($host == ""){
+                throw new Exception("No host detected. Please, put a valid host in order to be able to connect yourself to your database.");
+            } else {
+                $this->_host = $host;
+            }
+            if($name == ""){
+                throw new Exception("No name detected. Please, put a valid name in order to be able to connect yourself to your database.");
+            } else {
+                $this->_name = $name;
+            }
+            if($charset == ""){
+                throw new Exception("No charset detected. Please, put a valid charset in order to be able to connect yourself to your database.");
+            } else {
+                $this->_charset = $charset;
+            }
+        }
+
+        public function startConnection(){
+            if($this->_databaseState == self::DATABASE_NOT_CONNECTED){
+                
+            }
+        }
 
         public static function getInstance(){
             if(!isset(self::$instance)){
@@ -26,7 +58,7 @@
             return self::$instance;
         }
 
-        public function startConnection(){
+        public function startConnectionOLD(){
             if($this->databaseState == self::DATABASE_NOT_CONNECTED){
                 try{
                     if(Config::EXEC_MOD == Config::MOD_DEV){
